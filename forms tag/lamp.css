@@ -1,0 +1,49 @@
+body {
+  background: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  color: white;
+  font-family: Arial, sans-serif;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
+.lamp-wrapper {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.lamp-wrapper img {
+  max-width: 900px;
+  height: auto;
+  transition: filter 0.5s, box-shadow 0.5s;
+  filter: brightness(0.4); /* dimmed when off */
+}
+
+/* Glow when ON */
+.lamp-wrapper.on img {
+  filter: brightness(1);
+  box-shadow: 0 0 50px 20px rgba(255, 230, 150, 0.8);
+  border-radius: 8px; /* optional, nicer glow edges */
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #ffdd57;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #ffee88;
+}

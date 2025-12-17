@@ -1,0 +1,29 @@
+.head{
+    margin: 150px;
+    background-color: rgba(255, 228, 196, 0.853);
+}
+#t{
+text-align: right;
+
+
+}
+#edu{
+    color: blueviolet;
+}
+.pro{
+    color: rgba(3, 88, 1, 0.866);
+}
+.one{
+    color: rgba(16, 70, 187, 0.829);
+}
+#tech{
+    color: rgba(4, 90, 93, 0.858);
+}.cert{
+    color: rgba(237, 16, 104, 0.855);
+}
+b{
+    color: black;
+}
+#one{
+    color: rgba(131, 8, 247, 0.87);
+}

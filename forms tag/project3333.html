@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Attendance Tracker</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:0;
+  }
+  .card {
+    background:#fff;
+    padding:16px;
+    border-radius:8px;
+    box-shadow:0 0 8px rgba(0,0,0,0.1);
+    margin-bottom:16px;
+  }
+  h3 { margin-top:0; }
+  table {
+    width:100%;
+    border-collapse: collapse;
+    margin-top:10px;
+  }
+  thead { background:#000; color:#fff; }
+  th, td {
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:left;
+  }
+  input[type="text"], input[type="number"], input[type="date"], input[type="password"] {
+    width:100%;
+    padding:8px;
+    margin-top:4px;
+    margin-bottom:10px;
+    border-radius:4px;
+    border:1px solid #ccc;
+  }
+  button {
+    cursor:pointer;
+    border:none;
+    border-radius:4px;
+    padding:8px 14px;
+    margin:4px 0;
+  }
+  .btn-black { background:#000; color:#fff; }
+  .btn-green { background:#28a745; color:#fff; }
+  .btn-blue { background:#007bff; color:#fff; }
+  .btn-red { background:#dc3545; color:#fff; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SECTION -->
+<div id="loginSection" style="max-width:360px;margin:auto;margin-top:80px;padding:20px;background:#fff;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1)">
+  <h2 style="text-align:center;margin-bottom:20px;">Admin Login</h2>
+
+  <label>Username</label>
+  <input type="text" id="username" placeholder="Enter Admin Username">
+
+  <label>Password</label>
+  <input type="password" id="password" placeholder="Enter Password">
+
+  <button type="button" onclick="login()" class="btn-black" style="width:100%;margin-top:10px">Login</button>
+  <p id="loginError" style="color:red;margin-top:10px;display:none;">Invalid username or password</p>
+</div>
+
+
+
+<!-- MAIN APP -->
+<div id="mainApp" style="display:none; padding:20px; max-width:1200px; margin:auto;">
+
+  <h2 style="text-align:center;margin-bottom:20px;">SMART ATTENDANCE TRACKER</h2>
+
+  <div style="display:flex;gap:20px;align-items:flex-start;">
+
+    <!-- LEFT COLUMN -->
+    <div style="flex:1;min-width:350px;">
+
+      <!-- ADD STUDENT -->
+      <div class="card">
+        <h3>Add Student</h3>
+        <label>Roll No</label>
+        <input type="number" id="roll">
+        <label>Name</label>
+        <input type="text" id="name">
+        <label>Batch</label>
+        <input type="text" id="batch">
+        <button class="btn-green" onclick="addStudent()">Add Student</button>
+      </div>
+
+      <!-- STUDENT LIST & MARK ATTENDANCE -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="margin:0;">Student List & Attendance</h3>
+          <button class="btn-blue" onclick="loadSample()">Load Sample Data</button>
+        </div>
+
+        <table id="studentTable">
+          <thead><tr><th>Roll</th><th>Name</th><th>Batch</th></tr></thead>
+          <tbody></tbody>
+        </table>
+
+        <hr style="margin:20px 0;">
+
+        <h3>Mark Attendance</h3>
+        <label>Date</label>
+        <input type="date" id="attDate">
+        <label>Roll No</label>
+        <input type="number" id="attRoll">
+        <label>Status</label>
+        <select id="attStatus" style="width:100%;padding:8px;">
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+        </select>
+        <button class="btn-green" onclick="markAttendance()" style="margin-top:10px;">Submit Attendance</button>
+      </div>
+
+      <!-- ATTENDANCE PERCENTAGE -->
+      <div class="card">
+        <h3>Attendance Percentage</h3>
+        <table id="percentTable">
+          <thead><tr><th>Roll</th><th>Name</th><th>Percentage</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT COLUMN -->
+    <div style="flex:1;min-width:350px;">
+      <div class="card">
+        <h3>Attendance Report</h3>
+        <label>Roll No</label>
+        <input type="number" id="repRoll">
+        <button class="btn-blue" onclick="viewReport()">View Report</button>
+
+        <div id="reportArea" style="margin-top:20px;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+/* ========== LOGIN FUNCTION ========== */
+function login() {
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  const adminUser = "admin";
+  const adminPass = "admin123";
+
+  if (user === adminUser && pass === adminPass) {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("mainApp").style.display = "block";
+  } else {
+    document.getElementById("loginError").style.display = "block";
+  }
+}
+
+
+/* ========== DATA STORAGE ========== */
+function getStudents() {
+  return JSON.parse(localStorage.getItem("students") || "[]");
+}
+function saveStudents(list) {
+  localStorage.setItem(
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Attendance Tracker</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:0;
+  }
+  .card {
+    background:#fff;
+    padding:16px;
+    border-radius:8px;
+    box-shadow:0 0 8px rgba(0,0,0,0.1);
+    margin-bottom:16px;
+  }
+  h3 { margin-top:0; }
+  table {
+    width:100%;
+    border-collapse: collapse;
+    margin-top:10px;
+  }
+  thead { background:#000; color:#fff; }
+  th, td {
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:left;
+  }
+  input[type="text"], input[type="number"], input[type="date"], input[type="password"] {
+    width:100%;
+    padding:8px;
+    margin-top:4px;
+    margin-bottom:10px;
+    border-radius:4px;
+    border:1px solid #ccc;
+  }
+  button {
+    cursor:pointer;
+    border:none;
+    border-radius:4px;
+    padding:8px 14px;
+    margin:4px 0;
+  }
+  .btn-black { background:#000; color:#fff; }
+  .btn-green { background:#28a745; color:#fff; }
+  .btn-blue { background:#007bff; color:#fff; }
+  .btn-red { background:#dc3545; color:#fff; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SECTION -->
+<div id="loginSection" style="max-width:360px;margin:auto;margin-top:80px;padding:20px;background:#fff;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1)">
+  <h2 style="text-align:center;margin-bottom:20px;">Admin Login</h2>
+
+  <label>Username</label>
+  <input type="text" id="username" placeholder="Enter Admin Username">
+
+  <label>Password</label>
+  <input type="password" id="password" placeholder="Enter Password">
+
+  <button type="button" onclick="login()" class="btn-black" style="width:100%;margin-top:10px">Login</button>
+  <p id="loginError" style="color:red;margin-top:10px;display:none;">Invalid username or password</p>
+</div>
+
+
+
+<!-- MAIN APP -->
+<div id="mainApp" style="display:none; padding:20px; max-width:1200px; margin:auto;">
+
+  <h2 style="text-align:center;margin-bottom:20px;">SMART ATTENDANCE TRACKER</h2>
+
+  <div style="display:flex;gap:20px;align-items:flex-start;">
+
+    <!-- LEFT COLUMN -->
+    <div style="flex:1;min-width:350px;">
+
+      <!-- ADD STUDENT -->
+      <div class="card">
+        <h3>Add Student</h3>
+        <label>Roll No</label>
+        <input type="number" id="roll">
+        <label>Name</label>
+        <input type="text" id="name">
+        <label>Batch</label>
+        <input type="text" id="batch">
+        <button class="btn-green" onclick="addStudent()">Add Student</button>
+      </div>
+
+      <!-- STUDENT LIST & MARK ATTENDANCE -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="margin:0;">Student List & Attendance</h3>
+          <button class="btn-blue" onclick="loadSample()">Load Sample Data</button>
+        </div>
+
+        <table id="studentTable">
+          <thead><tr><th>Roll</th><th>Name</th><th>Batch</th></tr></thead>
+          <tbody></tbody>
+        </table>
+
+        <hr style="margin:20px 0;">
+
+        <h3>Mark Attendance</h3>
+        <label>Date</label>
+        <input type="date" id="attDate">
+        <label>Roll No</label>
+        <input type="number" id="attRoll">
+        <label>Status</label>
+        <select id="attStatus" style="width:100%;padding:8px;">
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+        </select>
+        <button class="btn-green" onclick="markAttendance()" style="margin-top:10px;">Submit Attendance</button>
+      </div>
+
+      <!-- ATTENDANCE PERCENTAGE -->
+      <div class="card">
+        <h3>Attendance Percentage</h3>
+        <table id="percentTable">
+          <thead><tr><th>Roll</th><th>Name</th><th>Percentage</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT COLUMN -->
+    <div style="flex:1;min-width:350px;">
+      <div class="card">
+        <h3>Attendance Report</h3>
+        <label>Roll No</label>
+        <input type="number" id="repRoll">
+        <button class="btn-blue" onclick="viewReport()">View Report</button>
+
+        <div id="reportArea" style="margin-top:20px;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+/* ========== LOGIN FUNCTION ========== */
+function login() {
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  const adminUser = "admin";
+  const adminPass = "admin123";
+
+  if (user === adminUser && pass === adminPass) {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("mainApp").style.display = "block";
+  } else {
+    document.getElementById("loginError").style.display = "block";
+  }
+}
+
+
+/* ========== DATA STORAGE ========== */
+function getStudents() {
+  return JSON.parse(localStorage.getItem("students") || "[]");
+}
+function saveStudents(list) {
+  localStorage.setItem("students", JSON.stringify(list));
+}
+
+function getAttendance() {
+  return JSON.parse(localStorage.getItem("attendance") || "[]");
+}
+function saveAttendance(list) {
+  localStorage.setItem("attendance", JSON.stringify(list));
+}
+
+
+/* ========== RENDER STUDENT TABLE ========== */
+function renderStudentList() {
+  const list = getStudents();
+  const tbody = document.querySelector("#studentTable tbody");
+  tbody.innerHTML = "";
+  list.forEach(s => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${s.roll}</td><td>${s.name}</td><td>${s.batch}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  renderPercentages();
+}
+
+
+/* ========== ADD STUDENT ========== */
+function addStudent() {
+  const roll = document.getElementById("roll").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const batch = document.getElementById("batch").value.trim();
+
+  if (!roll || !name || !batch) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  let list = getStudents();
+  list.push({ roll, name, batch });
+  saveStudents(list);
+
+  document.getElementById("roll").value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("batch").value = "";
+
+  renderStudentList();
+}
+
+
+/* ========== MARK ATTENDANCE ========== */
+function markAttendance() {
+  const date = document.getElementById("attDate").value;
+  const roll = document.getElementById("attRoll").value;
+  const status = document.getElementById("attStatus").value;
+
+  if (!date || !roll) {
+    alert("Please enter date and roll number");
+    return;
+  }
+
+  let list = getAttendance();
+  list.push({ date, roll, status });
+  saveAttendance(list);
+
+  renderStudentList();
+}
+
+
+/* ========== CALCULATE PERCENTAGE ========== */
+function calculatePercentage(roll) {
+  const list = getAttendance().filter(a => a.roll == roll);
+  if (list.length === 0) return 0;
+  const present = list.filter(a => a.status === "Present").length;
+  return Math.round((present / list.length) * 100);
+}
+
+
+/* ========== RENDER PERCENT TABLE ========== */
+function renderPercentages() {
+  const students = getStudents();
+  const tbody = document.querySelector("#percentTable tbody");
+  tbody.innerHTML = "";
+
+  students.forEach(s => {
+    const p = calculatePercentage(s.roll);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${s.roll}</td><td>${s.name}</td><td>${p}%</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+
+/* ========== VIEW ATTENDANCE REPORT ========== */
+function viewReport() {
+  const roll = document.getElementById("repRoll").value;
+  const area = document.getElementById("reportArea");
+
+  if (!roll) {
+    area.innerHTML = "<p>Please enter a roll number.</p>";
+    return;
+  }
+
+  const list = getAttendance().filter(a => a.roll == roll);
+
+  if (list.length === 0) {
+    area.innerHTML = "<p>No attendance found.</p>";
+    return;
+  }
+
+  let html = "<table><thead><tr><th>Date</th><th>Status</th></tr></thead><tbody>";
+  list.forEach(a => {
+    html += `<tr><td>${a.date}</td><td>${a.status}</td></tr>`;
+  });
+  html += "</tbody></table>";
+
+  area.innerHTML = html;
+}
+
+
+/* ========== LOAD SAMPLE DATA ========== */
+function loadSample() {
+  const sampleStudents = [
+    { roll: "101", name: "Asha", batch: "A" },
+    { roll: "102", name: "Ravi", batch: "B" },
+    { roll: "103", name: "Kiran", batch: "A" },
+  ];
+  saveStudents(sampleStudents);
+
+  const sampleAtt = [
+    { date: "2025-01-01", roll: "101", status: "Present" },
+    { date: "2025-01-02", roll: "101", status: "Absent" },
+    { date: "2025-01-01", roll: "102", status: "Present" },
+    { date: "2025-01-01", roll: "103", status: "Absent" },
+  ];
+  saveAttendance(sampleAtt);
+
+  renderStudentList();
+}
+
+renderStudentList();
+</script>
+
+</body>
+</html>

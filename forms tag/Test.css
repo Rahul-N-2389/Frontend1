@@ -1,0 +1,71 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-image: url(https://tse4.mm.bing.net/th/id/OIP.Kgb00CppWEx3SyjucN8_JQHaEo?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3);
+  padding: 20px;
+  color: aliceblue;
+
+  background-size: cover;       /* Ensures the image covers the entire screen */
+  background-repeat: no-repeat; /* Prevents tiling */
+  background-position: center;  /* Centers the image */
+  background-attachment: fixed;
+}
+.Container-form {
+  max-width: 600px;
+  margin: auto;
+  background: rgba(18, 16, 16, 0.35);
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 8px;
+
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.a {
+  margin-bottom: 20px;
+}
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+
+textarea {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #edd51a;
+  border-radius: 200px;
+}
+.bottom-b {
+  display: flex;
+  justify-content: space-between;
+}
+button{
+  padding: 10px 10px;
+  border: none;
+  background-color: #16dca0;
+  color: #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type="button"] {
+  background-color: #e01a1a;
+  color: #ccc;
+}
+.Container-form {
+  border: 20px solid rgb(230, 12, 12);
+  border-color: rgb(121, 248, 10);
+}
+/*div.Container-form{
+  border-color: rgb(121, 248, 10);
+}
+
+

@@ -1,0 +1,89 @@
+body{
+    padding: 50px;
+    background-image: url(https://images.unsplash.com/photo-1694805025253-0167c10019c0?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+   background-size: cover;       /* Ensures the image covers the entire screen */
+  background-repeat: no-repeat; /* Prevents tiling */
+  background-position: center;  /* Centers the image */
+  background-attachment: fixed;
+  text-align: center;
+}
+.icon{
+    width: 200px;
+    height: 70px;
+    float: left;
+}
+
+.logo{
+   color: aqua;
+   font-size: 35px;
+   font-family: Arial;
+   padding-left: 20px;
+   float: left;
+   padding-top: 10px;
+}
+.main{
+    float: left;
+
+    height: 70px;
+    width: 400px;
+}
+ul{
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ul li{
+    font-size: 15px;
+    margin-top: 27px;
+    margin-left: 67px;
+    list-style: none;
+}
+ul li a{
+    color: rgb(18, 239, 18);
+    display:inline-block;
+   margin-right: 65px;
+   font-family: Arial;
+   font-size: 20px;
+   list-style: none;
+   margin-top: 2px; 
+   text-decoration: none;
+   font-weight: bold;
+   transition:0.4s ease-in-out;
+
+}
+.main a:hover{
+    color: aliceblue;
+}
+.search{
+    width: 330px;
+    float: right;
+    margin-right: 270px;
+    border: solid #c8e812 ;
+    
+}
+.srch{
+    font-family: 'Times New Roman';
+    width: 330px;
+    height: 40px;
+    background: transparent;
+    border-top: 13px;
+}
+
+
+div.serch{
+    padding-left: 50px;
+}
+.search{
+    background: transparent;
+    border-radius: 2px;
+    border-color: cornsilk;
+    color: antiquewhite;
+    max-width: 1000px;
+   
+    
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],

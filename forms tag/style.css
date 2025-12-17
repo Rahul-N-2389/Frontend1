@@ -1,0 +1,28 @@
+body{
+    background-color: black;
+    border-color: rgb(216, 202, 12);
+    border-width: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 100px;
+}
+div.container{
+    background-color: rgb(28, 95, 219);
+    height: 400px;
+    width:400px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   
+   
+}
+
+
+.headache{
+    height: 150px;
+    width: 150px;
+    background-color: blue;
+    display: flex;
+    
+}

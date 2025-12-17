@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SMART ATTENDANCE TRACKER</title>
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --accent:#3b82f6;
+      --muted:#6b7280;
+      --danger:#ef4444;
+      --glass: rgba(15,23,42,0.04);
+    }
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{margin:0;background:var(--bg);color:#111}
+    .container{max-width:980px;margin:28px auto;padding:18px}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    header h1{font-size:20px;margin:0}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(15,23,42,0.06);}
+
+    /* Login */
+    .login-wrap{max-width:420px;margin:40px auto}
+    label{display:block;font-size:13px;margin-bottom:6px;color:var(--muted)}
+    input[type=text],input[type=password],input[type=date],select,input[type=number]{width:100%;padding:10px;border-radius:8px;border:1px solid #e5e7eb;margin-bottom:10px}
+    button{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+    .flex{display:flex;gap:10px;align-items:center}
+
+    /* dashboard layout */
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:16px}
+    .small{font-size:13px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left;border-bottom:1px solid #f1f5f9}
+    .actions button{margin-right:6px;padding:6px 8px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer}
+
+    /* report */
+    .report-bar{height:18px;background:#e6eefc;border-radius:999px;overflow:hidden}
+    .report-bar > .fill{height:100%;background:var(--accent);width:0;transition:width .6s ease}
+
+    .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .right-panel{display:flex;flex-direction:column;gap:12px}
+    .stat{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:#fafafa}
+    .logout{background:#fff;color:var(--accent);border:1px solid #dbeafe}
+    .danger{background:var(--danger)}
+
+    /* Menu (C2 style) */
+    .menu { display:flex; gap:12px; margin-bottom:18px; align-items:center; }
+    .menu button {
+      background:#ffffff;
+      border:1px solid #cbd5e1;
+      padding:8px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:14px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      transition: .15s ease;
+      color:#0f172a;
+    }
+    .menu button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(15,23,42,0.06); }
+    .menu button.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:none; }
+
+    /* section hide/show */
+    .section { display:none; }
+
+    /* percentage list */
+    .percent-list { display:flex; flex-direction:column; gap:12px; }
+    .percent-item { display:flex; align-items:center; gap:12px; padding:12px; border-radius:10px; background:var(--card); box-shadow: 0 4px 12px rgba(15,23,42,0.04); }
+    .percent-info { flex:1; }
+    .percent-title { font-weight:600; margin-bottom:6px; }
+    .percent-meta { color:var(--muted); font-size:13px; }
+
+    /* circular progress */
+    .circle {
+      width:72px; height:72px; display:inline-block; position:relative;
+    }
+    .circle svg { transform: rotate(-90deg); width:72px; height:72px; }
+    .circle .pct {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;
+    }
+
+    /* responsive */
+    @media (max-width:880px){
+      .grid{grid-template-columns:1fr}
+      .percent-list{flex-direction:column}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>SMART ATTENDANCE TRACKER</h1>
+      <div class="muted">Client-side · Local Storage</div>
+    </header>
+
+    <!-- LOGIN -->
+    <section id="loginSection" class="card login-wrap">
+      <h2 style="margin-top:0">Admin Login</h2>
+      <div class="small muted">Use the default credentials (created on first load).</div>
+      <div style="margin-top:12px">
+        <label for="username">Username</label>
+        <input id="username" type="text" placeholder="admin" />
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="password123" />
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button id="loginBtn">Login</button>
+          <button id="clearDataBtn" class="logout">Clear All Data</button>
+        </div>
+        <div class="small muted" style="margin-top:8px">Default credentials: <strong>admin</strong> / <strong>password123</strong></div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboardSection" style="display:none">
+      <div class="top-row">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="card" style="padding:10px">Welcome, Admin</div>
+          <div class="card small muted" id="studentCount">Students: 0</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="markDate" type="date" />
+          <button id="logoutBtn" class="logout">Logout</button>
+        </div>
+      </div>
+
+      <!-- HORIZONTAL MENU (C2) -->
+      <div class="menu">
+        <button id="menuAdd">👤 Add Student</button>
+        <button id="menuList">📋 Student List</button>
+        <button id="menuPercent">📊 Percentage</button>
+      </div>
+
+      <div class="grid">
+        <div>
+          <!-- SECTION: Add Student -->
+          <div id="secAdd" class="section">
+            <div class="card" style="margin-bottom:12px">
+              <h3 style="margin-top:0">Add Student</h3>
+              <label for="sRoll">Roll Number</label>
+              <input id="sRoll" type="text" placeholder="e.g. 101" />
+              <label for="sName">Name</label>
+              <input id="sName" type="text" placeholder="Student name" />
+              <label for="sBatch">Batch</label>
+              <input id="sBatch" type="text" placeholder="e.g. Batch A" />
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="addStudentBtn">Add Student</button>
+                <button id="importSample" class="logout">Add Sample Data</button>
+              </div>
+              <div id="addMsg" class="small muted" style="margin-top:8px"></div>
+            </div>
+          </div>
+
+          <!-- SECTION: Student List -->
+          <div id="secList" class="section">
+            <div class="card">
+              <h3 style="margin-top:0">Student List & Attendance</h3>
+              <div class="small muted">Select date on top to mark attendance for that date.</div>
+              <div style="overflow:auto;margin-top:10px">
+                <table id="studentTable">
+                  <thead>
+                    <tr><th>Roll</th><th>Name</th><th>Batch</th><th>Actions</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION: Percentage & Report (reportResult shown under percentage section) -->
+          <div id="secPercent" class="section">
+            <div class="card">
+              <h3 style="margin-top:0">Percentage Report (Circular)</h3>
+              <div class="small muted">Click a circle or the "Report" button to see detailed records below.</div>
+              <div id="percentContainer" style="margin-top:12px" class="percent-list">
+                <!-- generated items -->
+              </div>
+
+              <div id="reportArea" style="margin-top:16px">
+                <div id="reportResult"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="right-panel">
+          <div class="card">
+            <h3 style="margin-top:0">Quick Stats</h3>
+            <div class="stat"><div>Total Records</div><div id="totalRecords">0</div></div>
+            <div class="stat"><div>Last Marked Date</div><div id="lastDate">N/A</div></div>
+          </div>
+
+          <div class="card small muted">
+            <strong>Data Keys</strong>
+            <div>students — array of student objects</div>
+            <div>attendanceRecords — object keyed by roll containing date:status</div>
+            <div>adminCredentials — stored credentials</div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-top:0">Quick Actions</h3>
+            <div style="display:flex;gap:8px">
+              <button id="exportBtn" class="logout">Export JSON</button>
+              <button id="importBtn" class="logout">Import JSON</button>
+            </div>
+            <div class="small muted" style="margin-top:8px">Export/Import all students & attendance.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    /* ------------------ Keys & Init ------------------ */
+    const KEY_STUDENTS = 'students';
+    const KEY_ATT = 'attendanceRecords';
+    const KEY_ADMIN = 'adminCredentials';
+
+    function initAdmin(){
+      // create default credentials if not present
+      if(!localStorage.getItem(KEY_ADMIN)){
+        const creds = {username:'admin', password:'password123'};
+        localStorage.setItem(KEY_ADMIN, JSON.stringify(creds));
+      }
+      // ensure arrays exist
+      if(!localStorage.getItem(KEY_STUDENTS)) localStorage.setItem(KEY_STUDENTS, JSON.stringify([]));
+      if(!localStorage.getItem(KEY_ATT)) localStorage.setItem(KEY_ATT, JSON.stringify({}));
+    }
+
+    /* ------------------ Auth ------------------ */
+    function handleLogin(){
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const creds = JSON.parse(localStorage.getItem(KEY_ADMIN) || '{}');
+      if(username === creds.username && password === creds.password){
+        sessionStorage.setItem('isAuth','1');
+        showDashboard();
+      } else {
+        alert('Invalid credentials');
+      }
+    }
+
+    function logout(){
+      sessionStorage.removeItem('isAuth');
+      document.getElementById('loginSection').style.display='block';
+      document.getElementById('dashboardSection').style.display='none';
+    }
+
+    /* ------------------ Students ------------------ */
+    function getStudents(){
+      return JSON.parse(localStorage.getItem(KEY_STUDENTS) || '[]');
+    }
+    function saveStudents(arr){
+      localStorage.setItem(KEY_STUDENTS, JSON.stringify(arr));
+    }
+
+    function addStudent(){
+      const roll = document.getElementById('sRoll').value.trim();
+      const name = document.getElementById('sName').value.trim();
+      const batch = document.getElementById('sBatch').value.trim();
+      const msg = document.getElementById('addMsg');
+      msg.textContent = '';
+      if(!roll || !name){ msg.textContent='Roll and Name are required.'; return; }
+      const students = getStudents();
+      if(students.find(s=>String(s.roll) === String(roll))){ msg.textContent='Roll number already exists.'; return; }
+      students.push({roll:roll,name:name,batch:batch});
+      saveStudents(students);
+      msg.textContent='Student added.';
+      renderStudentList();
+      renderPercentList();
+      document.getElementById('sRoll').value='';document.getElementById('sName').value='';document.getElementById('sBatch').value='';
+    }
+
+    function renderStudentList(){
+      const tbody = document.querySelector('#studentTable tbody');
+      tbody.innerHTML = '';
+      const students = getStudents();
+      document.getElementById('studentCount').textContent = 'Students: ' + students.length;
+      const att = JSON.parse(localStorage.getItem(KEY_ATT) || '{}');
+      const selDate = document.getElementById('markDate').value;
+      students.forEach(s=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = <td>${s.roll}</td><td>${s.name}</td><td>${s.batch||''}</td><td class="actions"></td>;
+        const actions = tr.querySelector('.actions');
+        // present/absent buttons
+        const pBtn = document.createElement('button'); pBtn.textContent='P';
+        pBtn.onclick = ()=>{ markAttendance(s.roll,'P'); };
+        const aBtn = document.createElement('button'); aBtn.textContent='A';
+        aBtn.onclick = ()=>{ markAttendance(s.roll,'A'); };
+        // quick view history
+        const vBtn = document.createElement('button'); vBtn.textContent='Report';
+        vBtn.onclick = ()=>{ openReportFor(s.roll); };
+        // show current status for selected date
+        const statusSpan = document.createElement('span'); statusSpan.style.marginLeft='8px';
+        if(selDate && att[s.roll] && att[s.roll][selDate]){
+          statusSpan.textContent = 'Status: ' + att[s.roll][selDate];
+        }
+        actions.appendChild(pBtn);actions.appendChild(aBtn);actions.appendChild(vBtn);actions.appendChild(statusSpan);
+        tbody.appendChild(tr);
+      });
+      updateQuickStats();
+    }
+
+    /* ------------------ Attendance ------------------ */
+    function markAttendance(roll,status){
+      const date = document.getElementById('markDate').value;
+      if(!date){ alert('Select a date first'); return; }
+      const records = JSON.parse(localStorage.getItem(KEY_ATT) || '{}');
+      if(!records[roll]) records[roll] = {};
+      records[roll][date] = status;
+      localStorage.setItem(KEY_ATT, JSON.stringify(records));
+      renderStudentList();
+      renderPercentList();
+      updateQuickStats();
+      document.getElementById('lastDate').textContent = date;
+    }
+
+    function importSampleData(){
+      const sample = [
+        {roll:'101',name:'Asha Singh',batch:'Batch A'},
+        {roll:'102',name:'Ravi Kumar',batch:'Batch A'},
+        {roll:'103',name:'Priya Patel',batch:'Batch B'}
+      ];
+      saveStudents(sample);
+      const sampleAtt = {
+        '101':{'2025-11-10':'P','2025-11-11':'P'},
+        '102':{'2025-11-10':'A','2025-11-11':'P'},
+        '103':{'2025-11-11':'A'}
+      };
+      localStorage.setItem(KEY_ATT, JSON.stringify(sampleAtt));
+      renderStudentList();
+      renderPercentList();
+      updateQuickStats();
+    }
+
+    /* ------------------ Reporting & Percentage (circular) ------------------ */
+    function calculatePercentage(roll){
+      const records = JSON.parse(localStorage.getItem(KEY_ATT) || '{}');
+      const history = records[roll] || {};
+      const total = Object.keys(history).length;
+      if(total===0) return 0;
+      const present = Object.values(history).filter(x=>x==='P').length;
+      // compute percent digit-by-digit:
+      const raw = (present / total) * 100;
+      // round to nearest integer
+      const pct = Math.round(raw);
+      return pct;
+    }
+
+    function renderPercentList(){
+      const cont = document.getElementById('percentContainer');
+      cont.innerHTML = '';
+      const students = getStudents();
+      if(students.length === 0){
+        cont.innerHTML = '<div class="small muted">No students. Add students first.</div>';
+        return;
+      }
+      students.forEach(s=>{
+        const pct = calculatePercentage(s.roll);
+        const item = document.createElement('div');
+        item.className = 'percent-item';
+        item.innerHTML = `
+          <div class="circle" data-roll="${s.roll}" title="Click to view ${s.name} report">
+            <svg viewBox="0 0 36 36">
+              <path d="M18 2.0845
+                       a 15.9155 15.9155 0 0 1 0 31.831
+                       a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none" stroke="#e6eefc" stroke-width="3.5"></path>
+              <path class="progress" d="M18 2.0845
+                       a 15.9155 15.9155 0 0 1 0 31.831
+                       a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none" stroke="${pct>60? '#16a34a' : pct>30? '#f59e0b' : '#ef4444'}" stroke-width="3.5"
+                    stroke-dasharray="${pct}, 100" stroke-linecap="round"></path>
+            </svg>
+            <div class="pct">${pct}%</div>
+          </div>
+          <div class="percent-info">
+            <div class="percent-title">${s.name} <span class="muted">(${s.roll})</span></div>
+            <div class="percent-meta">Batch: ${s.batch || '—'} &nbsp; • &nbsp; ${getSummaryText(s.roll)}</div>
+          </div>
+          <div>
+            <button class="reportBtn" data-roll="${s.roll}">Report</button>
+          </div>
+        `;
+        cont.appendChild(item);
+
+        // make circle clickable
+        item.querySelector('.circle').addEventListener('click', ()=>{
+          openReportFor(s.roll);
+        });
+        item.querySelector('.reportBtn').addEventListener('click', ()=>{
+          openReportFor(s.roll);
+        });
+      });
+    }
+
+    function getSummaryText(roll){
+      const records = JSON.parse(localStorage.getItem(KEY_ATT) || '{}');
+      const history = records[roll] || {};
+      const total = Object.keys(history).length;
+      const present = Object.values(history).filter(x=>x==='P').length;
+      return ${present}/${total} present;
+    }
+
+    function openReportFor(roll){
+      // ensure percentage section visible
+      hideAll();
+      document.getElementById('secPercent').style.display = 'block';
+      document.getElementById('menuPercent').classList.add('active');
+      generateReport(roll);
+      // scroll to report
+      const reportArea = document.getElementById('reportArea');
+      reportArea.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function generateReport(roll){
+      const reportDiv = document.getElementById('reportResult');
+      reportDiv.innerHTML = '';
+      const students = getStudents();
+      const student = students.find(s=>String(s.roll)===String(roll));
+      if(!student){ alert('Student not found'); return; }
+      const records = JSON.parse(localStorage.getItem(KEY_ATT) || '{}');
+      const history = records[roll] || {};
+      const dates = Object.keys(history).sort();
+      const table = document.createElement('table');
+      table.innerHTML = '<thead><tr><th>Date</th><th>Status</th></tr></thead>';
+      const tb = document.createElement('tbody');
+      let present = 0;
+      dates.forEach(d=>{
+        const st = history[d];
+        if(st === 'P') present++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = <td>${d}</td><td>${st}</td>;
+        tb.appendChild(tr);
+      });
+      table.appendChild(tb);
+      const total = dates.length;
+      const percent = total === 0 ? 0 : Math.round((present/total)*100);
+
+      const title = document.createElement('div');
+      title.innerHTML = <strong>${student.name} (${student.roll})</strong> — ${present}/${total} present;
+
+      // Circular big bar for report
+      const big = document.createElement('div');
+      big.style.display = 'flex';
+      big.style.alignItems = 'center';
+      big.style.gap = '16px';
+      big.style.marginTop = '10px';
+
+      const circ = document.createElement('div');
+      circ.innerHTML = `
+        <div class="circle" style="width:92px;height:92px">
+          <svg viewBox="0 0 36 36" style="width:92px;height:92px">
+            <path d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none" stroke="#e6eefc" stroke-width="3.5"></path>
+            <path d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none" stroke="${percent>60? '#16a34a' : percent>30? '#f59e0b' : '#ef4444'}" stroke-width="3.5"
+                  stroke-dasharray="${percent}, 100" stroke-linecap="round"></path>
+          </svg>
+          <div class="pct" style="position:relative;left:0;top:0;padding:0">${percent}%</div>
+        </div>
+      `;
+      const info = document.createElement('div');
+      info.innerHTML = <div style="font-weight:700">${student.name} (${student.roll})</div><div class="small muted">${present}/${total} days present</div>;
+
+      big.appendChild(circ);
+      big.appendChild(info);
+
+      reportDiv.appendChild(title);
+      reportDiv.appendChild(big);
+      reportDiv.appendChild(document.createElement('br'));
+      reportDiv.appendChild(table);
+    }
+
+    /* ------------------ Utilities ------------------ */
+    function updateQuickStats(){
+      const records = JSON.parse(localStorage.getItem(KEY_ATT) || '{}');
+      const totalRecords = Object.values(records).reduce((acc,o)=> acc + Object.keys(o).length, 0);
+      document.getElementById('totalRecords').textContent = totalRecords;
+      // find last date
+      let last = null;
+      Object.values(records).forEach(obj=>{ Object.keys(obj).forEach(d=>{ if(!last || d>last) last=d; }); });
+      document.getElementById('lastDate').textContent = last || 'N/A';
+    }
+
+    function clearAllData(){
+      if(!confirm('Clear ALL local data including students, attendance and admin credentials?')) return;
+      localStorage.removeItem(KEY_STUDENTS);
+      localStorage.removeItem(KEY_ATT);
+      localStorage.removeItem(KEY_ADMIN);
+      alert('All data cleared. Page will reload to re-initialize.');
+      location.reload();
+    }
+
+    /* ------------------ Export / Import (quick) ------------------ */
+    function exportData(){
+      const data = {
+        students: getStudents(),
+        attendance: JSON.parse(localStorage.getItem(KEY_ATT) || '{}'),
+        admin: JSON.parse(localStorage.getItem(KEY_ADMIN) || '{}')
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'attendance-export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importDataPrompt(){
+      const inp = document.createElement('input');
+      inp.type = 'file';
+      inp.accept = 'application/json';
+      inp.onchange = (e) => {
+        const f = e.target.files[0];
+        if(!f) return;
+        const reader = new FileReader();
+        reader.onload = function(ev){
+          try{
+            const parsed = JSON.parse(ev.target.result);
+            if(parsed.students) localStorage.setItem(KEY_STUDENTS, JSON.stringify(parsed.students));
+            if(parsed.attendance) localStorage.setItem(KEY_ATT, JSON.stringify(parsed.attendance));
+            if(parsed.admin) localStorage.setItem(KEY_ADMIN, JSON.stringify(parsed.admin));
+            alert('Import successful.');
+            renderStudentList(); renderPercentList(); updateQuickStats();
+          }catch(err){
+            alert('Invalid file.');
+          }
+        };
+        reader.readAsText(f);
+      };
+      inp.click();
+    }
+
+    /* ------------------ Menu / UI Flow ------------------ */
+    function hideAll(){
+      document.querySelectorAll(".section").forEach(s => s.style.display = "none");
+      document.querySelectorAll(".menu button").forEach(b => b.classList.remove("active"));
+    }
+
+    document.getElementById('menuAdd').addEventListener('click', ()=>{
+      hideAll();
+      document.getElementById('secAdd').style.display = 'block';
+      document.getElementById('menuAdd').classList.add('active');
+    });
+    document.getElementById('menuList').addEventListener('click', ()=>{
+      hideAll();
+      document.getElementById('secList').style.display = 'block';
+      document.getElementById('menuList').classList.add('active');
+    });
+    document.getElementById('menuPercent').addEventListener('click', ()=>{
+      hideAll();
+      document.getElementById('secPercent').style.display = 'block';
+      document.getElementById('menuPercent').classList.add('active');
+      renderPercentList();
+    });
+
+    function showDashboard(){
+      document.getElementById('loginSection').style.display='none';
+      document.getElementById('dashboardSection').style.display='block';
+      // default open list view
+      document.getElementById('menuList').click();
+      renderStudentList();
+      renderPercentList();
+      updateQuickStats();
+    }
+
+    /* ------------------ Event Listeners init ------------------ */
+    document.addEventListener('DOMContentLoaded',()=>{
+      initAdmin();
+      if(sessionStorage.getItem('isAuth')) showDashboard();
+
+      // default date to today
+      const dt = new Date();
+      const pad = n=> String(n).padStart(2,'0');
+      document.getElementById('markDate').value = ${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())};
+
+      document.getElementById('loginBtn').addEventListener('click', handleLogin);
+      document.getElementById('logoutBtn').addEventListener('click', logout);
+      document.getElementById('addStudentBtn').addEventListener('click', addStudent);
+      document.getElementById('importSample').addEventListener('click', importSampleData);
+      document.getElementById('markDate').addEventListener('change', renderStudentList);
+      document.getElementById('clearDataBtn').addEventListener('click', clearAllData);
+      document.getElementById('exportBtn').addEventListener('click', exportData);
+      document.getElementById('importBtn').addEventListener('click', importDataPrompt);
+
+      // generate report button not needed here; report opened by clicking circle or Report button
+      renderStudentList();
+      renderPercentList();
+      updateQuickStats();
+    });
+
+  </script>
+</body>
+</html>
