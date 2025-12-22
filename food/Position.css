@@ -1,0 +1,25 @@
+.container{
+
+    width: 500px;
+    height: 300px;
+}
+img{
+    width: 100%;
+}
+.child1{
+  
+    width: 500px;
+    height: 300px;
+}
+p{
+    color: white;
+    position: absolute;
+    top: 150px;
+    left: 200px;
+    
+}
+b{
+    background-color: black;
+    padding: 2px;
+   
+}
