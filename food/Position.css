@@ -2,6 +2,7 @@
 
     /* width: 500px;
     height: 300px; */
+    padding: 3px;
 }
 img{
     width: 100%;
@@ -22,7 +23,7 @@ img{
 }
 b{
     background-color: black;
-    padding: 4px;
+    padding: 5px;
     color: aliceblue;
     
    
@@ -30,6 +31,8 @@ b{
 .childContainer1{
          /* border: 2px solid rgba(18, 137, 74, 0.449); */
          display: flex;
+         padding: 10px 10px 0px 10px ;
+       
         
 
 }
@@ -39,7 +42,7 @@ b{
 }
 .child{
     /* border: 2px solid blue; */
-    height: 300px;
+    /* height: 300px; */
     width: 350px;
     padding-right: 20px;
     position: relative;
