@@ -1,4 +1,4 @@
-.container{
+.container {
     background-color: bisque;
     border: 2px solid black;
     height: 400px;
@@ -11,7 +11,8 @@
     background-image: url(https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D);
     background-size: cover;
 }
-.navbar{
+
+.navbar {
     background-color: rgb(16, 132, 16);
     width: 200px;
     height: 60px;
@@ -20,46 +21,51 @@
     position: fixed;
     z-index: 1;
 }
-i{
+
+i {
     color: rgb(3, 17, 28);
-    
+
     /* background-color: rgb(215, 22, 22); */
-     display: inline-block;
-     font-size: 8px;  
+    display: inline-block;
+    font-size: 8px;
 }
-.image{
-    background-color:white;
+
+.image {
+    background-color: white;
     border: 0.5px solid black;
     height: 20px;
     width: 20px;
-     display: inline-block;
-     border-radius: 50%;
+    display: inline-block;
+    border-radius: 50%;
     position: absolute;
     bottom: 5px;
 }
-.image img{
+
+.image img {
     width: 100%;
     border-radius: 100px;
-   
+
 }
 
-h1{
+h1 {
     color: aliceblue;
     font-size: 15px;
     position: absolute;
     top: 0px;
     left: 5px;
 }
-h4{
+
+h4 {
     font-size: 10px;
     display: inline-block;
     padding: 0px 20px 0px 0px;
     /* background-color: blueviolet; */
     margin-left: 25px;
 
-    
+
 }
-.icons{
+
+.icons {
     /* background-color: rgb(58, 167, 222); */
     display: inline-block;
     width: 100%;
@@ -68,39 +74,48 @@ h4{
     padding-top: 30px;
     height: 30px;
 }
-#a1{
-     margin-left: 5px;
+
+#a1 {
+    margin-left: 5px;
 }
-#a2{
-     margin-left: 25px;
+
+#a2 {
+    margin-left: 25px;
 }
-#a5{
+
+#a5 {
     width: 100%;
     position: absolute;
     top: 3px;
 }
-#a6{
+
+#a6 {
     padding-left: 6px;
 }
-.footer{
-    background-color:white;
-     width: 100%;
+
+.footer {
+    background-color: white;
+    width: 100%;
     height: 20px;
     border-radius: 10px;
     position: sticky;
     bottom: 0px;
 
 }
-.send{
+
+.send {
     text-align: right;
     position: absolute;
     left: 160px;
     background-color: rgb(34, 147, 121);
 }
-.messages{
+
+.messages {
     width: fit-content;
+    margin-left: 2px;
 }
-small{
+
+small {
     font-size: 7px;
     background-color: rgb(217, 209, 165);
     border-radius: 50px;
@@ -111,14 +126,16 @@ small{
     scrollbar-width: none;
     left: 40%;
 }
-p{
+
+p {
     background-color: rgb(32, 198, 216);
     border-radius: 50px;
     padding: 2px 5px 2px 5px;
     margin: 5px 0px 5px 0px;
     font-size: 8px;
 }
-.mike{
+
+.mike {
     background-color: rgb(30, 244, 10);
     border-radius: 50%;
     height: 13px;
@@ -127,7 +144,8 @@ p{
     bottom: 10%;
     left: 90%;
 }
-input{
+
+input {
     background-color: white;
     width: 110px;
     border: none;
