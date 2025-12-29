@@ -1,0 +1,112 @@
+.container {
+    /* border: 2px solid rgb(12, 12, 12); */
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.child {
+    /* border: 2px solid black; */
+    background-color: rgb(7, 7, 7);
+
+    padding: 5px;
+    height: 40px;
+    width: 50px;
+}
+
+i {
+    color: antiquewhite;
+
+}
+
+p {
+    color: aliceblue;
+    font-size: 8px;
+}
+
+.container2 {
+
+    /* border: 2px solid black;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px; */
+    height: 15px;
+    /* width: 100px; */
+    display: flex;
+
+
+}
+
+.container2 i {
+    font-size: 10px;
+
+
+}
+
+.sub1 {
+
+    background-color: rgb(6, 142, 6);
+    border-bottom-left-radius: 5px;
+    width: 200px;
+    /* flex-grow: 10px; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.sub1 i {
+    font-size: 10px;
+}
+
+.sub2 i {
+    font-size: 8px;
+}
+
+.sub2 {
+    background-color: red;
+    border-bottom-right-radius: 5px;
+    width: 100px;
+    display: flex;
+
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.tags {
+    /* border: 2px solid red; */
+    background-color: rgba(26, 24, 24, 0.868);
+    height: 70px;
+    display: flex;
+
+    justify-content: center;
+    text-align: center;
+
+}
+
+#one {
+    font-size: 5px;
+}
+
+#two {
+    font-size: 5px;
+}
+
+.child-3 {
+    position: relative;
+    top: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+
+.two {
+    position: absolute;
+    top: 0px;
+    left: 80%;
+    margin: 0px;
+    /* background-color: rgb(66, 61, 61); */
+}
