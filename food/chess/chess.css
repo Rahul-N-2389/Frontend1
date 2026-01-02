@@ -1,0 +1,124 @@
+.container{
+    /* border: 2px dotted rgb(51, 94, 34); */
+    display: flex;
+    top: 0px;
+    flex-wrap: wrap;
+    align-content: end;
+    width: 450px;
+    height: 450px;
+}
+.child-1{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+
+    
+}
+.child-2{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+.child-3{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+.child-4{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+.child-5{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+.child-6{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+.child-7{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+.child-8{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    
+}
+body{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.cintainer-1{
+    display: flex;
+}
+.cintainer-2{
+    display: flex;
+}
+.cintainer-3{
+    display: flex;
+}
+.cintainer-4{
+    display: flex;
+}
+.cintainer-5{
+    display: flex;
+}
+.cintainer-6{
+    display: flex;
+}
+.cintainer-7{
+    display: flex;
+}
+.cintainer-8{
+    display: flex;
+}
+.child-1:nth-child(even){
+    background-color: aqua;
+}
+.child-2:nth-child(odd){
+    background-color: aqua;
+}
+.child-3:nth-child(even){
+    background-color: aqua;
+}
+.child-4:nth-child(odd){
+    background-color: aqua;
+}
+.child-5:nth-child(even){
+    background-color: aqua;
+}
+.child-6:nth-child(odd){
+    background-color: aqua;
+}
+.child-7:nth-child(even){
+    background-color: aqua;
+}
+.child-8:nth-child(odd){
+    background-color: aqua;
+}
+img{
+    padding-top: 10px;
+}
