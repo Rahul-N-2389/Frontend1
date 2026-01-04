@@ -28,18 +28,21 @@ body {
     animation-name: con2;
     animation-duration: 2s;
     animation-iteration-count: infinite;
-   
+
     /* animation-timing-function: ease; */
     animation-delay: 3s;
 }
-#two{
-     animation-direction:alternate-reverse ;    
+
+#two {
+    animation-direction: alternate-reverse;
 }
-#one{
-     animation-direction: reverse;
+
+#one {
+    animation-direction: alternate-reverse;
 }
-#three{
-     animation-direction: normal;
+
+#three {
+    animation-direction: alternate-reverse;
 }
 
 .child {
@@ -283,4 +286,9 @@ body {
     to {
         transform: rotate(360deg);
     }
+}
+
+.container1:hover {
+    transform: scale(2);
+
 }
